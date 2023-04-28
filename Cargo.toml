@@ -3,6 +3,8 @@ name = "cocoa-purity"
 version = "0.1.0"
 edition = "2021"
 authors = ["nerodono"]
+keywords = ["macro"]
+description = "Simple macro collection"
 license = "MIT"
 repository = "https://github.com/nerodono/cocoa-purity"
 
