@@ -9,12 +9,12 @@ pub enum Base {
 
 #[map_enum(Base)]
 pub enum Mapped {
-    Nero = A,
+    Nero { name: &'static str } = A,
     Ada = B,
 }
 
 fn main() {
-    let mapped = Mapped::Nero;
+    let mapped = Mapped::Nero { name: "Aleksandr" };
     let base: Base = mapped.into();
     dbg!(base);
 }

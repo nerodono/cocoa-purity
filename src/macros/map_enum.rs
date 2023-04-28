@@ -22,11 +22,11 @@ pub fn map_enum(args: TokenStream, body: TokenStream) -> TokenStream {
                 .variants
                 .iter_mut()
                 .map(|v| {
-                    if !matches!(v.fields, Fields::Unit) {
-                        abort! {
-                            v.fields, "Only unit fields are supported"
-                        }
-                    }
+                    let wildcard_ts = match v.fields {
+                        Fields::Named(..) => quote!({ .. }),
+                        Fields::Unnamed(..) => quote!((..)),
+                        Fields::Unit => quote!(),
+                    };
 
                     let var_ident = &v.ident;
                     let discr = {
@@ -40,7 +40,7 @@ pub fn map_enum(args: TokenStream, body: TokenStream) -> TokenStream {
                     v.discriminant = None;
 
                     quote! {
-                        #ident::#var_ident => Self::#discr
+                        #ident::#var_ident #wildcard_ts => Self::#discr
                     }
                 })
                 .collect();
