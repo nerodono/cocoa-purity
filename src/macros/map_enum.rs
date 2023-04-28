@@ -1,5 +1,4 @@
 use proc_macro::TokenStream;
-use proc_macro2::TokenStream as Ts2;
 use proc_macro_error::abort;
 use quote::{quote, ToTokens};
 use syn::{Data, Fields, Meta};
@@ -18,7 +17,7 @@ pub fn map_enum(args: TokenStream, body: TokenStream) -> TokenStream {
     let from_impl = match args {
         Meta::Path(path) => {
             let ts_ty = path.to_token_stream();
-            let branches: Vec<Ts2> = enum_
+            let branches: Vec<_> = enum_
                 .variants
                 .iter_mut()
                 .map(|v| {
