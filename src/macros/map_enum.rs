@@ -30,12 +30,10 @@ pub fn map_enum(args: TokenStream, body: TokenStream) -> TokenStream {
 
                     let var_ident = &v.ident;
                     let discr = {
-                        let Some((_, discr)) = &v.discriminant else {
-                            abort! {
-                                v, "No base enum variant specified"
-                            }
-                        };
-                        discr.to_token_stream()
+                        match &v.discriminant {
+                            Some((_, discr)) => discr.to_token_stream(),
+                            None => var_ident.to_token_stream(),
+                        }
                     };
                     v.discriminant = None;
 
